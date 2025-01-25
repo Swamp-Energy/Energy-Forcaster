@@ -10,13 +10,14 @@ client = MongoClient(uri)
 
 def getcitylocations():
     db = client["Cities"]
-    collection = db["Positional-Data"]
+    collection = db["Positional Data"]
 
     script_dir = os.path.dirname(__file__)
     csv_path = os.path.join(script_dir, 'uscities.csv')
-    df = pd.read_csv(csv_path, skiprows=1, usecols=[1,2,6,7])
-    df.columns = ['city', 'state', 'latitude', 'longitude']
+    df = pd.read_csv(csv_path, skiprows=1, usecols=[1,2,6,7,8])
+    df.columns = ['city', 'state', 'latitude', 'longitude', 'population']
 
+    df = df[df['population'] > 20000].drop('population', axis=1)
     cities = df.to_dict('records')
     
     bulk_ops = [UpdateOne(
