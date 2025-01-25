@@ -3,7 +3,7 @@ import requests_cache
 import pandas as pd
 from retry_requests import retry
 
-def getweatherdata(latitude, longitude, start_date="2022-01-01", end_date="2025-01-01"):
+def getweatherdata(latitude, longitude, start_date="2023-01-01", end_date="2025-01-01"):
     cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
     retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
     openmeteo = openmeteo_requests.Client(session = retry_session)
@@ -15,7 +15,7 @@ def getweatherdata(latitude, longitude, start_date="2022-01-01", end_date="2025-
         "longitude": longitude,
         "start_date": start_date,
         "end_date": end_date,
-        "hourly": "temperature_2m"
+        "hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", "uv_index"]
     }
 
     # Fetch the weather data
@@ -23,11 +23,6 @@ def getweatherdata(latitude, longitude, start_date="2022-01-01", end_date="2025-
     
     # Process the first location's response
     response = responses[0]
-    # Temporary print statements for debugging
-    print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-    print(f"Elevation {response.Elevation()} m asl")
-    print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-    print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
 
     # Process hourly data
     hourly = response.Hourly()
