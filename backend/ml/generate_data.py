@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Create a date range
-date_range = pd.date_range(start="2023-01-01", end="2023-01-15", freq="H")  # Hourly data for 15 days
+date_range = pd.date_range(start="2023-01-01", end="2023-03-01", freq="h")  # Hourly data for 2 months
 
 # Generate dummy data
 np.random.seed(42)
@@ -17,8 +17,12 @@ data = {
 # Create a DataFrame
 dummy_data = pd.DataFrame(data)
 
+# Ensure no duplicates and the time series is continuous
+assert dummy_data['datetime'].is_unique, "The datetime column has duplicate entries."
+assert dummy_data['datetime'].is_monotonic_increasing, "The datetime column is not sorted correctly."
+
 # Save to a CSV file
-file_path = "/mnt/data/energy_data.csv"
+file_path = "data/energy_data.csv"
 dummy_data.to_csv(file_path, index=False)
 
-file_path
+print(f"Generated data saved to: {file_path}")

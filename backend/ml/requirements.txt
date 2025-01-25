@@ -1,3 +1,4 @@
 darts
 pandas
 matplotlib
+numpy

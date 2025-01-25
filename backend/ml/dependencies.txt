@@ -1,7 +1,8 @@
 cd backend/ml
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv venv (if this doesn't work, use "py -3.10 -m venv venv")
+venv/bin/activate 
 pip install -r requirements.txt
-python models/train.py
-python models/predict.py
+python generate_data.py
+python train.py
+python predict.py
 
