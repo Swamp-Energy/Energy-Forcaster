@@ -2,3 +2,6 @@ cd backend/ml
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
+python models/train.py
+python models/predict.py
+
