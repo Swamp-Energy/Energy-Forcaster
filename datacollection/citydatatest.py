@@ -14,7 +14,8 @@ def gethourlydata():
     cities = collection.find({})
     
     for city in cities:
-        print(f"{city['city']}, {city['state']}: ({city['latitude']}, {city['longitude']})")
+        # print(getweatherdata(city["latitude"], city["longitude"]))
+        pass
 
 if __name__ == "__main__":
     gethourlydata()
