@@ -3,7 +3,7 @@ import requests_cache
 import pandas as pd
 from retry_requests import retry
 
-def getweatherdata(latitude, longitude, start_date="2023-01-01", end_date="2025-01-01"):
+def getweatherdata(latitude, longitude, start_date="2023-01-26", end_date="2025-01-24"):
     cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
     retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
     openmeteo = openmeteo_requests.Client(session=retry_session)
