@@ -34,17 +34,17 @@ hourly_multipliers = {
 def is_holiday(date):
     holidays = [
         "01/01",  
-        "07/04", 
+        "07/04",  
         "12/25",  
         "11/25",  
     ]
     return date.strftime("%m/%d") in holidays or (date.month == 11 and date.weekday() == 3 and 22 <= date.day <= 28)
 
-def generate_hourly_energy_usage(city_data, years=2):
+def generate_hourly_energy_usage(city_data, weeks=2):
     data = []
 
-    start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=365 * years)
-    end_date = start_date + timedelta(days=365 * years)
+    start_date = datetime(2025, 1, 24) + timedelta(weeks=weeks)
+    end_date = start_date + timedelta(days=14)  
 
     current_time = start_date
     while current_time < end_date:
@@ -61,7 +61,6 @@ def generate_hourly_energy_usage(city_data, years=2):
             seasonal_multiplier = get_seasonal_multiplier(month)
             hour_multiplier = hourly_multipliers["residential" if hour < 6 or hour >= 18 else "commercial"][hour]
 
-           
             if weekday >= 5:  
                 weekend_multiplier = 1.1  
             else:
@@ -89,13 +88,13 @@ def generate_hourly_energy_usage(city_data, years=2):
 
     return data
 
-energy_data = generate_hourly_energy_usage(city_data, years=2)
+energy_data = generate_hourly_energy_usage(city_data, weeks=2)
 
 energy_df = pd.DataFrame(energy_data)
 
 energy_df.sort_values(by=["city", "timestamp"], inplace=True)
 
-csv_path = os.path.join(script_dir, 'hourly_energy_usage_2_years.csv')
+csv_path = os.path.join(script_dir, 'hourly_energy_usage_2_yearsw.csv')
 energy_df.to_csv(csv_path, index=False)
 
-print(f"Realistic energy usage data for 2 years generated, sorted, and saved to '{csv_path}'.")
+print(f"Dummy energy usage data for 2 weeks starting from {datetime(2025, 1, 24) + timedelta(weeks=2):%Y-%m-%d} generated and saved to '{csv_path}'.")
