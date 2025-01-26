@@ -1,0 +1,8 @@
+cd backend/ml
+python -m venv venv (if this doesn't work, use "py -3.10 -m venv venv")
+venv/bin/activate 
+pip install -r requirements.txt
+python generate_data.py
+python train.py
+python predict.py
+
