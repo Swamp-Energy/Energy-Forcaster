@@ -15,7 +15,9 @@ def getweatherdata(latitude, longitude, start_date="2023-01-01", end_date="2025-
         "longitude": longitude,
         "start_date": start_date,
         "end_date": end_date,
-        "hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", "uv_index"]
+        "hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", 
+                   "visibility", "wind_speed_10m", "soil_temperature_0cm",
+                   "soil_moisture_0_to_1cm", "uv_index", "is_day"]
     }
 
     # Fetch the weather data
